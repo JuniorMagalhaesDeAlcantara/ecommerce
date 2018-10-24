@@ -37,6 +37,8 @@ class User extends Model {
 
 			return $user;
 
+
+
 		} else {
 
 			throw new \Exception("Não foi possível fazer login.");
