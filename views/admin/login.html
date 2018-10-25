@@ -27,7 +27,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    <a href="/res/admin/index2.html"><b>Admin</b>LTE</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -35,11 +35,11 @@
 
     <form action="/admin/login" method="post">
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Login" name="login">
+        <input type="text" class="form-control" placeholder="Login" name="deslogin">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password" name="password">
+        <input type="password" class="form-control" placeholder="Password" name="despassword">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
@@ -67,7 +67,7 @@
     </div>
     <!-- /.social-auth-links -->
 
-    <a href="#">I forgot my password</a><br>
+    <a href="/admin/forgot">Esqueci minha senha</a><br>
     <a href="register.html" class="text-center">Register a new membership</a>
 
   </div>

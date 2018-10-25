@@ -8,6 +8,7 @@ use \Hcode\DB\Sql;
 class User extends Model {
 
 	const SESSION = "User";
+	const SECRET = "HcodePhp7_Secret";
 
 	protected $fields = [
 		"iduser", "idperson", "deslogin", "despassword", "inadmin", "dtergister"
@@ -147,6 +148,67 @@ class User extends Model {
  		));
  		
  		}
+
+ 		public static function getForgot($email)
+ 		{
+ 			$sql = new Sql();
+
+ 			$results = $sql->select("
+
+ 			SELECT *
+			FROM tb_persons a
+			INNER JOIN tb_users b USING(idperson)
+			WHERE a.desemail = :email;
+			", array(
+				":email"=>$email
+
+			));
+
+ 			if (count($results) === 0)
+ 			{
+ 				throw new \Exception("Não foi possível recuperar a senha.");
+ 				
+ 			}
+ 			else
+ 			{
+ 				$data = $results[0];
+
+ 				$sql->select("CALL sp_userpasswordsrecoveries_create(:iduser, :desip)", array(
+ 					":iduser"=>$data["iduser"],
+ 					":desip"=>$S_SERVER["REMOTE_ADDR"]
+
+ 				)); 
+
+ 			if	(count($results2) === 0)
+ 			{	
+ 				throw new \Exception("Não foi possível recuperar a senha");
+ 			}
+ 			else
+ 			{
+
+ 				$dataRecovery = $results2[0];
+
+ 				$code = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, User::SECRET, $dataRecovery["idrecovery"], MCRYPT_MODE_ECB));
+
+ 				$link = "http://bodysitescommerce.com.br/admin/forgot/reset?code=?code";
+
+
+ 				$mailer = new Mailer($data["desmail"],$data["desperson"], "Redefinir senha da Body Sites Store", "forgot",
+ 					array(
+ 						"name"=>$data["desperson"],
+ 						"link"=>$link
+
+ 					));
+
+ 				$mailer->send();
+
+ 				return $data;
+
+ 			}	
+
+	
+		}
+	}
 }
 
- ?>
+?>
